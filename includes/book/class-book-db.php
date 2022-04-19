@@ -34,6 +34,7 @@ class Meto_Book_DB implements METOBG\BOOK\Interface_DB {
     {
         
     }
+    
     public static function number_of_books(){
         global $wpdb;
         $sql="SELECT COUNT(ID) FROM `{$wpdb->posts}` WHERE  `post_type`='metobook' AND `post_status`='publish'";

@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
  * @return void
  */
 if(!function_exists("meto_setup_constants") ){
+
     function meto_setup_constants()
     {
         do_action("meto_bg_before_define_constants");
@@ -32,5 +33,4 @@ if(!function_exists("meto_setup_constants") ){
         }
         do_action("meto_bg_after_define_constants");
     }
-    
 }

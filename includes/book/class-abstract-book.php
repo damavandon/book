@@ -26,6 +26,7 @@ protected static function instance()
    }
    return self::$_instance;
 }
+
 public abstract function DependencyInjection();
 
 }	

@@ -1,7 +1,5 @@
 <?php
 
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
 
 /**
  * What type of request is this?

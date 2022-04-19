@@ -22,11 +22,13 @@ class Meto_Book extends Meto_Book_Abstract
     {
         $this->db = new Meto_Book_DB();
     }
+
     public function include()
     {
     }
     public function save()
     {
+        
     }
 
     public static function register_post_type()

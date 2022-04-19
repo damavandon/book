@@ -40,6 +40,7 @@ function METOBG()
 
       require_once __DIR__ . '/includes/class-book-gallery.php';
       require_once __DIR__.'/includes/helper-functions.php';
+      
       Meto_Book_Gallery::instance();
    }
 
