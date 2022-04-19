@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 
-// Ensure visibility.
+
 if ( empty( $post )) {
 	return;
 }

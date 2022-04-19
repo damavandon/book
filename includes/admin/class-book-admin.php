@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!class_exists("Meto_BG_Admin")) {
+    
     class Meto_BG_Admin
     {
         public function __construct()

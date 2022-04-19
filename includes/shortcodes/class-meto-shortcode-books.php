@@ -231,7 +231,7 @@ class Meto_Book_Shortcode_Books
 	/**
 	 * Parse query args.
 	 *
-	 * @since  3.2.0
+	 * @since  1.0.0
 	 * @return array
 	 */
 	protected function parse_query_args()
@@ -306,7 +306,7 @@ class Meto_Book_Shortcode_Books
 	/**
 	 * Set categories query args.
 	 *
-	 * @since 3.2.0
+	 * @since 1.0.0
 	 * @param array $query_args Query args.
 	 */
 	protected function set_categories_query_args(&$query_args)
@@ -351,7 +351,6 @@ class Meto_Book_Shortcode_Books
 	 */
 	protected function set_attributes_query_args(&$query_args)
 	{
-
 		if (!empty($this->attributes['attribute']) || !empty($this->attributes['terms'])) {
 			$taxonomy = strstr($this->attributes['attribute'], 'pa_') ? sanitize_title($this->attributes['attribute']) : 'pa_' . sanitize_title($this->attributes['attribute']);
 			$terms    = $this->attributes['terms'] ? array_map('sanitize_title', explode(',', $this->attributes['terms'])) : array();

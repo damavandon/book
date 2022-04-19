@@ -26,8 +26,6 @@
                 ],
             ],
         ],
-
-
     ],
     'author' => [
         'title' => __("Author Information", METO_BG_TEXT_DOMAIN),

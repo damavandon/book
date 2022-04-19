@@ -123,7 +123,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		/**
 		 * Registers query vars for API access
 		 *
-		 * @since 1.5
+		 * @since 1.0.0
 		 * @author Meahdi Torkaman
 		 * @param array $vars Query vars
 		 * @return string[] $vars New query vars
@@ -176,7 +176,8 @@ if (!class_exists("Meto_Book_End_Point")) {
 					$this->is_valid_request = false;
 					$this->invalid_version();
 				}
-			} else {
+			}
+			 else {
 
 				$this->queried_version = $this->get_default_version();
 			}
@@ -200,7 +201,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		 * Listens for the API and then processes the API requests
 		 *
 		 * @global $wp_query
-		 * @since 1.5
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function process_query()
@@ -237,7 +238,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 
 			switch ($this->endpoint):
 
-				case 'book':
+				case 'books':
 
 					$args = array(
 						'book'       => isset($wp_query->query_vars['book'])       ? absint($wp_query->query_vars['book']) : null,
@@ -301,7 +302,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 			global $wp_query;
 
 			// Whitelist our query options
-			$accepted = apply_filters('meto_bg_api_valid_query_modes', array('book', 'info'));
+			$accepted = apply_filters('meto_bg_api_valid_query_modes', array('books', 'info'));
 
 			$query = isset($wp_query->query_vars['metobg-api']) ? $wp_query->query_vars['metobg-api'] : null;
 			$query = str_replace($this->queried_version . '/', '', $query);
@@ -379,7 +380,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		 *
 		 * Determines whether results should be displayed in XML or JSON
 		 *
-		 * @since 1.5
+		 * @since 1.0.0
 		 *
 		 * @return mixed|void
 		 */
@@ -405,16 +406,19 @@ if (!class_exists("Meto_Book_End_Point")) {
 			$valid = false;
 
 			$this->override = false;
+			$token=(isset($wp_query->query_vars['token']) && is_null($wp_query->query_vars['token']))?$wp_query->query_vars['token']:"";
+			if(isset($_GET['token'])){
+				$token=_sanitize_text_fields($_GET['token']);
+			}
+			$api=is_null($wp_query->query_vars['metobg-api'])?"":$wp_query->query_vars['metobg-api'];
+			
+			if (!empty($api) && (!empty($token))) {
 
-			// Make sure we have both user and api key
-			if (!empty($wp_query->query_vars['metobg-api']) && (!empty($wp_query->query_vars['token']))) {
-
-				if (empty($wp_query->query_vars['token'])) {
+				if (empty($token)) {
 					$this->missing_auth();
 					$valid =  false;
 				}
-				// Retrieve the user by public API key and ensure they exist
-				if (!($user = $this->get_user($wp_query->query_vars['token']))) {
+				if (!($user = $this->get_user($token))) {
 					$this->invalid_token();
 					$valid = false;
 				} else {
@@ -423,22 +427,13 @@ if (!class_exists("Meto_Book_End_Point")) {
 				}
 			} elseif (!empty($wp_query->query_vars['metobg-api'])) {
 				$this->is_valid_request = false;
+				$this->missing_auth();
 				$valid = false;
 			}
 			return $valid;
 		}
 
-		/**
-		 * Retrieve the user ID based on the public key provided
-		 *
-		 * @since 1.5.1
-		 * @global object $wpdb Used to query the database using the WordPress
-		 * Database API
-		 *
-		 * @param string $key Public Key
-		 *
-		 * @return bool if user ID is found, false otherwise
-		 */
+		
 		public function get_user($key = '')
 		{
 
@@ -474,7 +469,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		private function missing_auth()
 		{
 			$error = array();
-			$error['error'] = __('You must specify tokan', METO_BG_TEXT_DOMAIN);
+			$error['error'] = __('You must specify token', METO_BG_TEXT_DOMAIN);
 
 			$this->data = $error;
 			$this->output(401);
@@ -538,7 +533,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		 * Get page number
 		 *
 		 * @access private
-		 * @since 1.5
+		 * @since 1.0.0
 		 * @global $wp_query
 		 * @return int $wp_query->query_vars['page'] if page number returned (default: 1)
 		 */
@@ -552,7 +547,7 @@ if (!class_exists("Meto_Book_End_Point")) {
 		 * Number of results to display per page
 		 *
 		 * @access private
-		 * @since 1.5
+		 * @since 1.0.0
 		 * @global $wp_query
 		 * @return int $per_page Results to display per page (default: 10)
 		 */

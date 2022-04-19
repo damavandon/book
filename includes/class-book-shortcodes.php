@@ -18,7 +18,9 @@ class Meto_Book_Shortcodes
     {
         $shortcodes = array(
             'books' => __CLASS__ . '::books',
+
         );
+        
         foreach ($shortcodes as $shortcode => $function) {
             $tag = "{$shortcode}_shortcode_tag";
             add_shortcode(apply_filters($tag, $shortcode), $function);

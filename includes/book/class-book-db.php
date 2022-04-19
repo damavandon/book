@@ -41,6 +41,7 @@ class Meto_Book_DB implements METOBG\BOOK\Interface_DB {
         $result=$wpdb->get_row($sql,ARRAY_A);
         if(count($result)!=0){
             $result=$result['COUNT(ID)'];
+            return $result;
         }
         return 0;
     }
